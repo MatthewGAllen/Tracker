@@ -1,0 +1,49 @@
+﻿@model WorkItem
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<form method="post" asp-action="Edit">
+    <div>
+        <input type="hidden" asp-for="Id" />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group row">
+            <div class=" col-2">
+                <label asp-for="Type" class="col-form-label"></label>
+            </div>
+            <div class="col-5">
+                <input readonly asp-for="Type" class="form-control" />
+            </div>
+            <span asp-validation-for="Type" class="text-danger"></span>
+        </div>
+
+        <div class="form-group row">
+            <div class=" col-2">
+                <label asp-for="Description" class="col-form-label"></label>
+            </div>
+            <div class="col-5">
+                @Html.TextAreaFor(m => m.Description)
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class=" col-2">
+                <label asp-for="Status" class="col-form-label"></label>
+            </div>
+            <div class="col-5">
+                <select asp-for="Status">
+                    <option>Open</option>
+                    <option>In Progress</option>
+                    <option>Closed</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-5 offset-2">
+            <partial name="_EditAndBackToListButton" model="Model.Id" />
+        </div>
+    </div>
+</form>
+

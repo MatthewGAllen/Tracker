@@ -22,6 +22,7 @@ namespace Tracker.Controllers
             return View(workItems);
         }
 
+
         public IActionResult Create()
         {
             return View();
@@ -40,6 +41,34 @@ namespace Tracker.Controllers
             {
                 return View(workItem);
             }
+        }
+
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if(id == null)
+            {
+                return NotFound();
+            }
+            var workItem = await _context.WorkItem.FindAsync(id);
+            if(workItem == null)
+            {
+                return NotFound(0);
+            }
+            return View(workItem);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(WorkItem workItem)
+        {
+            if(ModelState.IsValid)
+            {
+                _context.Update(workItem);
+                var modLog = new ModLog { ItemId = workItem.Id };
+                _context.Add(modLog);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(workItem);
         }
     }
 }

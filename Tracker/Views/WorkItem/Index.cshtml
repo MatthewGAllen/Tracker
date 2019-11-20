@@ -20,7 +20,7 @@
                         @Html.DisplayFor(m => item.Type)
                     </div>
                     <div class="col-2">
-                        <p>edit/details/delete goes here</p>
+                        <partial name="_TableButtonPartial" model="item.Id" />
                     </div>
                 </li>
             }
