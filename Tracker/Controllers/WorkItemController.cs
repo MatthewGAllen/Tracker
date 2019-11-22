@@ -33,6 +33,7 @@ namespace Tracker.Controllers
         {
             if(ModelState.IsValid)
             {
+                workItem.CreatedAt = DateTime.Now;
                 _context.Add(workItem);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -69,6 +70,66 @@ namespace Tracker.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(workItem);
+        }
+
+        public async Task<IActionResult> Details(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var workDetails = new WorkDetailsDto
+            {
+                Works = await _context.WorkItem.FindAsync(id),
+                ModLogs = await _context.ModLog.Where(m => m.ItemId == id).ToListAsync()
+            };
+            if (workDetails == null)
+            {
+                return NotFound();
+            }
+            return View(workDetails);
+        }
+
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var workDetails = new WorkDetailsDto
+            {
+                Works = await _context.WorkItem.FindAsync(id),
+                ModLogs = await _context.ModLog.Where(m => m.ItemId == id).ToListAsync()
+            };
+            if (workDetails == null)
+            {
+                return NotFound();
+            }
+            return View(workDetails);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteConfirmed(int? id)
+        {
+            var workItem = await _context.WorkItem.FindAsync(id);
+            if (workItem == null)
+            {
+                return View();
+            }
+            _context.WorkItem.Remove(workItem);
+
+            var modLogs = _context.ModLog.Where(m => m.ItemId == id);
+            if(modLogs == null)
+            {
+                return View();
+            }
+            foreach(var item in modLogs)
+            {
+                _context.ModLog.Remove(item);
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
     }
 }

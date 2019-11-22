@@ -13,9 +13,6 @@ namespace Tracker.Models
         public DateTime CreatedAt { get; set; }
         public string Status { get; set; }
 
-        public WorkItem()
-        {
-            this.CreatedAt = DateTime.Now;
-        }
+        
     }
 }
