@@ -51,6 +51,7 @@ namespace Tracker.Controllers
                 return NotFound();
             }
             var workItem = await _context.WorkItem.FindAsync(id);
+            Console.Write(workItem.CreatedAt);
             if(workItem == null)
             {
                 return NotFound(0);
@@ -61,6 +62,7 @@ namespace Tracker.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(WorkItem workItem)
         {
+            Console.WriteLine(workItem.CreatedAt);
             if(ModelState.IsValid)
             {
                 _context.Update(workItem);

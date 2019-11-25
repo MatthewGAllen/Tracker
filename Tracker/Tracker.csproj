@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
@@ -15,4 +15,11 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.0.0" />
   </ItemGroup>
 
+  <!--<PropertyGroup>
+    <PreserveCompilationContext>true</PreserveCompilationContext>
+    <PreserveCompilationReferences>true</PreserveCompilationReferences>
+    <GenerateRazorHostingAssemblyInfo>true</GenerateRazorHostingAssemblyInfo>
+    <RazorUpToDateReloadFileTypes>$(RazorUpToDateReloadFileTypes.Replace('.cshtml', ''))</RazorUpToDateReloadFileTypes>
+    <AddCshtmlFilesToDotNetWatchList>false</AddCshtmlFilesToDotNetWatchList>
+  </PropertyGroup>-->
 </Project>

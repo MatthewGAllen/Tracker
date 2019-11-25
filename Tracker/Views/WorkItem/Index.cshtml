@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<WorkItem>
 
+
 @{
     ViewData["Title"] = "Index";
 }
@@ -9,27 +10,100 @@
         <partial name="_CreateButton" />
     </div>
 </div>
-<div class="col-4">
-    <ul>
+<div class="row">
+    <div class="col-4">
+        <h2>Open Tasks</h2>
         @if (Model.Count() > 0)
         {
-            @foreach (var item in Model)
-            {
-                <li>
-                    <div class="col-2">
-                        @Html.DisplayFor(m => item.Type)
-                    </div>
-                    <div class="col-2">
-                        <partial name="_TableButtonPartial" model="item.Id" />
-                    </div>
-                </li>
-            }
+            var open = 0;
+            <ul>
+                @foreach (var item in Model)
+                {
+                    @if (item.Status == "Open")
+                    {
+                        open++;
+                        <li>
+                            <div class="col">
+                                @Html.DisplayFor(m => item.Type)
+                            </div>
+                            <div class="col-4">
+                                <partial name="_TableButtonPartial" model="item.Id" />
+                            </div>
+                        </li>
+                    }
+                }
+                @if (open == 0)
+                {
+                    <p>No Tasks Yet...</p>
+                }
+            </ul>
         }
-        else
+        
+    </div>
+    <div class="col-4">
+        <h2>In Progress</h2>
+        @if (Model.Count() > 0)
         {
-            <p>No Work Items Yet</p>
+            var inProgress = 0;
+            <ul>
+                @foreach (var item in Model)
+                {
+                    @if (item.Status == "In Progress")
+                    {
+                        inProgress++;
+                        <li>
+                            <div class="col">
+                                @Html.DisplayFor(m => item.Type)
+                            </div>
+                            <div class="col-4">
+                                <partial name="_TableButtonPartial" model="item.Id" />
+                            </div>
+                        </li>
+                    }
+                }
+                @if (inProgress == 0)
+                {
+                    <p>No Tasks In Progress...</p>
+                }
+            </ul>
         }
-
-    </ul>
+    </div>
+    <div class="col-4">
+        <h2>Closed</h2>
+        @if (Model.Count() > 0)
+        {
+            var closed = 0;
+            <ul>
+                @foreach (var item in Model)
+                {
+                    @if (item.Status == "Closed")
+                    {
+                        closed++;
+                        <li>
+                            <div class="col" >
+                                @Html.DisplayTextFor(m => item.Type)
+                            </div>
+                            <div class="col-4">
+                                <partial name="_TableButtonPartial" model="item.Id" />
+                            </div>
+                        </li>
+                    }
+                }
+                @if(closed == 0)
+                {
+                    <p>No Tasks Closed...</p>
+                }
+            </ul>
+        }
+    </div>
 </div>
+
+
+
+
+
+
+
+
+
 
